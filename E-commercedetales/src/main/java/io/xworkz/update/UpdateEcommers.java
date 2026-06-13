@@ -15,7 +15,7 @@ public class UpdateEcommers {
         }
 
         //connection
-        String sqlQuery ="Update users_info set password='prateek777',user_name='prateek g d'  where user_id=1";
+        String sqlQuery ="INSERT INTO  users_info VALUES (1, 'PRATEEK','prateek@gmail.com', 'prateek133', 8762540280),(2, 'prajwal','prajwal@gmail.com', 'prajwal133', 9867540280),(3, 'praveen','praveen@gmail.com', 'praveen133', 9876540280)";
         Connection connection=null;
         Statement statement=null;
         try {
