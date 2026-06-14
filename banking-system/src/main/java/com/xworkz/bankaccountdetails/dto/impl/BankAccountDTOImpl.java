@@ -117,12 +117,16 @@ public class BankAccountDTOImpl implements BankAccountDTO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if(connection!=null){
+        finally {
+
+
+        if(connection!=null) {
             try {
                 connection.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        }
         }
         return isDelete;
 
