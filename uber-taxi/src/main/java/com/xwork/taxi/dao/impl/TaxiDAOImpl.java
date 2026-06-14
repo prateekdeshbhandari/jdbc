@@ -7,8 +7,9 @@ import com.xwork.taxi.dto.TaxiDetailsDTO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-    public class TaxiDAOImpl implements TaxiDao {
+public class TaxiDAOImpl implements TaxiDao {
 
         @Override
         public boolean save(TaxiDetailsDTO taxiDetails) {
@@ -64,6 +65,61 @@ import java.sql.PreparedStatement;
             return isSaved;
         }
 
+        @Override
+        public boolean savedUpdate(String driverName, String carModal) {
+
+            System.out.println("update data prosesing ...");
+            boolean isUpdate=false;
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            Connection connection=null;
+            String updateQuery="update taxidetails set car_model=? where driver_name=?";
+            try {
+              connection=  DriverManager.getConnection("jdbc:mysql://localhost:3306/payment_db","root","Prateek@#1");
+
+              PreparedStatement preparedStatement=connection.prepareStatement(updateQuery);
+              preparedStatement.setString(1,carModal);
+              preparedStatement.setString(2,driverName);
+              int update=preparedStatement.executeUpdate();
+                System.out.println("update date sucssfully...");
+                isUpdate=true;
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            return isUpdate;
+        }
+
+        @Override
+        public boolean savedDelete(String driverName) {
+            System.out.println("dtel;ete  data prossesing...");
+            boolean isDelete=false;
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            String dekleteQuery="Delete from taxidetails where driver_name=?";
+            Connection connection=null;
+
+            try {
+               connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/payment_db","root","Prateek@#1");
+                PreparedStatement preparedStatement=connection.prepareStatement(dekleteQuery);
+                preparedStatement.setString(1,driverName);
+                int delete=preparedStatement.executeUpdate();
+                System.out.println("delete data sussefully..."+delete);
+                isDelete=true;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            return isDelete;
+        }
 
 
-}
+    }
