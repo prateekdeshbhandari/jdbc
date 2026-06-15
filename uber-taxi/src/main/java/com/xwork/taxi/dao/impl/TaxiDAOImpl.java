@@ -4,19 +4,16 @@ import com.xwork.taxi.dao.TaxiDao;
 import com.xwork.taxi.dto.TaxiDetailsDTO;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class TaxiDAOImpl implements TaxiDao {
 
         @Override
-        public boolean save(TaxiDetailsDTO taxiDetails) {
+        public int save(TaxiDetailsDTO taxiDetails) {
 
             System.out.println("Invoking Saving taxi details: " + taxiDetails);
 
-            boolean isSaved = false;
+            int rowInsert=0 ;
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -45,9 +42,9 @@ public class TaxiDAOImpl implements TaxiDao {
                 prepareStatement.setString(3, taxiDetails.getLicensePlate());
                 prepareStatement.setDouble(4, taxiDetails.getFarePerKm());
 
-                boolean check = prepareStatement.execute();
-                isSaved = check;
+                rowInsert = prepareStatement.executeUpdate();
 
+                System.out.println("insert susdefullu.."+rowInsert);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             } finally {
@@ -62,7 +59,7 @@ public class TaxiDAOImpl implements TaxiDao {
 
 
 
-            return isSaved;
+            return rowInsert;
         }
 
         @Override
@@ -120,6 +117,59 @@ public class TaxiDAOImpl implements TaxiDao {
 
             return isDelete;
         }
+    @Override
+    public TaxiDetailsDTO selectByDriverName(String driverName) {
+
+        TaxiDetailsDTO dto= null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String selectQuery =
+                "SELECT *  FROM taxidetails WHERE driver_name=?";
+
+        Connection connection = null;
+
+        try {
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/payment_db",
+                    "root",
+                    "Prateek@#1");
+
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(selectQuery);
+
+            preparedStatement.setString(1, driverName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
 
 
+dto=new TaxiDetailsDTO();
+               dto.setDriverName( resultSet.getString("driver_name"));
+              dto.setCarModel( resultSet.getString("car_model"));
+               dto.setLicensePlate( resultSet.getString("lisence_plate"));
+               dto.setFarePerKm( resultSet.getDouble("fare_per_km"));
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return dto;
     }
+
+}
