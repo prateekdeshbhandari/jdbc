@@ -7,9 +7,9 @@ import java.sql.*;
 
 public class RealEstateDAOImpl implements RealEstateDao {
     @Override
-    public Boolean save(RealEstatePropertyDetilesDTO realEstatePropertyDetilesDTO) {
+    public int save(RealEstatePropertyDetilesDTO realEstatePropertyDetilesDTO) {
         System.out.println("property data Invoking..."+realEstatePropertyDetilesDTO);
-        boolean isProperty=false;
+        int  rowselected=0;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver") ;
         } catch (ClassNotFoundException e) {
@@ -25,9 +25,9 @@ public class RealEstateDAOImpl implements RealEstateDao {
            preparedStatement.setDouble(3,realEstatePropertyDetilesDTO.getPrice());
            preparedStatement.setDouble(4,realEstatePropertyDetilesDTO.getArea());
            preparedStatement.setString(5, realEstatePropertyDetilesDTO.getAddress());
-           boolean insert=preparedStatement.execute();
+           int insert=preparedStatement.executeUpdate();
             System.out.println("insert data sucssefully..."+insert);
-        isProperty=true;
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -42,7 +42,7 @@ public class RealEstateDAOImpl implements RealEstateDao {
             }
         }
 
-        return isProperty;
+        return rowselected;
     }
 
     @Override
@@ -118,5 +118,38 @@ public class RealEstateDAOImpl implements RealEstateDao {
         }
 
         return isDelete;
+    }
+
+    @Override
+    public RealEstatePropertyDetilesDTO saveRead(String propertyId) {
+
+        RealEstatePropertyDetilesDTO dto=null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+        }
+        Connection connection=null;
+
+            try {
+              connection=  DriverManager.getConnection("jdbc:mysql://localhost:3306/payment_db","root","Prateek@#1");
+            PreparedStatement preparedStatement=connection.prepareStatement("select * from property_info where property_id=?");
+                preparedStatement.setString(1,propertyId);
+                ResultSet resultSet=preparedStatement.executeQuery();
+
+                while(resultSet.next()){
+                    dto =new RealEstatePropertyDetilesDTO();
+                    dto.setPropertyId(resultSet.getInt("property_id"));
+                    dto.setAddress(resultSet.getString("address"));
+                    dto.setPrice(resultSet.getDouble("price"));
+                    dto.setArea(resultSet.getDouble("area"));
+                    dto.setOwnerName(resultSet.getString("ownerName"));
+                }
+
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+
+        return dto;
     }
 }

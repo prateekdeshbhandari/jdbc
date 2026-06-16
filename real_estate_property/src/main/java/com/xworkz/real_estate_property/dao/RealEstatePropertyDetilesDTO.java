@@ -2,9 +2,11 @@ package com.xworkz.real_estate_property.dao;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
+
 public class RealEstatePropertyDetilesDTO {
     private int propertyId;
     private String address;

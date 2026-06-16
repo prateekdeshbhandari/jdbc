@@ -4,6 +4,8 @@ package com.xworkz.real_estate_property.runner;
 import com.xworkz.real_estate_property.dao.RealEstatePropertyDetilesDTO;
 import com.xworkz.real_estate_property.dto.RealEstateDao;
 import com.xworkz.real_estate_property.dto.impl.RealEstateDAOImpl;
+import com.xworkz.real_estate_property.severis.RealEstate;
+import com.xworkz.real_estate_property.severis.impl.RealEstetPropartesServis;
 
 public class RealEstatePropertyRunner {
     public static void main(String[] args) {
@@ -23,14 +25,25 @@ public class RealEstatePropertyRunner {
         dto1.setArea(30 * 50);
         dto1.setOwnerName("Prajwal");
 
-       boolean data= dao.save(dto1);
+       int data= dao.save(dto1);
         System.out.println("deteils saved..."+data);
-
+RealEstate realEstate=new RealEstetPropartesServis();
+realEstate.validet(dto);
+realEstate.validet(dto1);
         RealEstateDAOImpl dao1=new RealEstateDAOImpl();
        boolean up=dao1.saveUpdate(2,2400000,"prveeena");
         System.out.println("Updated: "+up);
-        boolean de=dao1.savedDelete(2);
-        System.out.println("Delete: "+de);
+      // boolean de=dao1.savedDelete(2);
+       // System.out.println("Delete: "+de);
+
+        RealEstatePropertyDetilesDTO ref=dao.saveRead("2");
+        System.out.println("Id"+ref.getPropertyId());
+        System.out.println("Addres"+ref.getAddress());
+        System.out.println("price"+ref.getPrice());
+        System.out.println("area"+ref.getArea());
+        System.out.println("ownerName"+ref.getOwnerName());
+
+
     }
 
 }
