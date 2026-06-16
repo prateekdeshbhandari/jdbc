@@ -7,6 +7,8 @@ import com.xworkz.bankaccountdetails.dto.impl.BankAccountDTOImpl;
 import com.xworkz.bankaccountdetails.servies.BankAccountValidet;
 import com.xworkz.bankaccountdetails.servies.impl.BankAccountImpl;
 
+import java.util.List;
+
 public class BankAccountDetielsRunner {
     public static void main(String[] args) {
         BankAccountDTO dto=new BankAccountDTOImpl();
@@ -40,8 +42,17 @@ public class BankAccountDetielsRunner {
 
         System.out.println("Updated : " + updated);
 
-        boolean delete=dtos.saveDelete(13);
-        System.out.println("Delete : " + delete);
+//        boolean delete=dtos.saveDelete(13);
+//        System.out.println("Delete : " + delete);
+        List<AccvountDetlilesDAO> ref=dto.accountListRead();
+
+        System.out.println(ref.size());
+        for(AccvountDetlilesDAO rff:ref) {
+            System.out.println("read data"+rff);
+
+        }
+
+
 
     }
 

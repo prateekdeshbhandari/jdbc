@@ -5,6 +5,8 @@ import com.xworkz.bankaccountdetails.dao.AccvountDetlilesDAO;
 import com.xworkz.bankaccountdetails.dto.BankAccountDTO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BankAccountDTOImpl implements BankAccountDTO {
 
@@ -130,7 +132,8 @@ public class BankAccountDTOImpl implements BankAccountDTO {
     }
 
     @Override
-    public AccvountDetlilesDAO validection(int accountNumber) {
+    public List<AccvountDetlilesDAO> accountListRead() {
+        List<AccvountDetlilesDAO>attayListnew= new  ArrayList();
         AccvountDetlilesDAO dto= null;
 
         try {
@@ -140,7 +143,7 @@ public class BankAccountDTOImpl implements BankAccountDTO {
         }
 
         String selectQuery =
-                "SELECT *  FROM  account_info WHERE account_number =?";
+                "SELECT *  FROM  account_info ";
 
         Connection connection = null;
 
@@ -154,7 +157,7 @@ public class BankAccountDTOImpl implements BankAccountDTO {
                     connection.prepareStatement(selectQuery);
 
 
-            preparedStatement.setInt(1,accountNumber);
+
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -163,10 +166,11 @@ public class BankAccountDTOImpl implements BankAccountDTO {
 
                 dto=new AccvountDetlilesDAO();
                 dto.setAccountNumber( resultSet.getInt("account_number"));
-                dto.setAccountHolderName( resultSet.getString(" account_holder_name"));
+                dto.setAccountHolderName( resultSet.getString("account_holder_name"));
                 dto.setAccountType( resultSet.getString("account_type"));
                 dto.setBalance( resultSet.getDouble("balance"));
                 dto.setBranchName( resultSet.getString("branch_name"));
+                attayListnew.add(dto);
             }
 
 
@@ -182,7 +186,7 @@ public class BankAccountDTOImpl implements BankAccountDTO {
             }
         }
 
-        return dto;
+        return attayListnew;
     }
 
 }
