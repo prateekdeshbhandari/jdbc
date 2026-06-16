@@ -6,6 +6,8 @@ import com.xwork.taxi.dto.TaxiDetailsDTO;
 import com.xwork.taxi.servies.TaxiDetielsDtoValidection;
 import com.xwork.taxi.servies.impl.TaxiDetailesValidectionImpl;
 
+import java.util.List;
+
 public class TaxiRunner {
     public static void main(String[] args) {
         TaxiDao dao = new TaxiDAOImpl();
@@ -40,12 +42,17 @@ public class TaxiRunner {
        // boolean dele=dao1.savedDelete("Devanath");
        // System.out.println("Deleteed: "+dele);
 
-       TaxiDetailsDTO ref= dao.selectByDriverName("Devanath");
+//       TaxiDetailsDTO ref= dao.selectByDriverName("Devanath");
+//
+//        System.out.println("Driver Name : " + ref.getDriverName());
+//        System.out.println("Car Model   : " + ref.getCarModel());
+//        System.out.println("License Plate : " + ref.getLicensePlate());
+//        System.out.println("Fare Per Km : " + ref.getFarePerKm());
+        List <TaxiDetailsDTO>ref=dao.taxiDetielsList();
+        for(TaxiDetailsDTO reff:ref){
+            System.out.println("read thois row.."+reff);
 
-        System.out.println("Driver Name : " + ref.getDriverName());
-        System.out.println("Car Model   : " + ref.getCarModel());
-        System.out.println("License Plate : " + ref.getLicensePlate());
-        System.out.println("Fare Per Km : " + ref.getFarePerKm());
+        }
     }
 }
 

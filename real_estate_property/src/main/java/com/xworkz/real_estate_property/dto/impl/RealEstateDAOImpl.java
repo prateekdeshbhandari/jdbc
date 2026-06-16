@@ -4,6 +4,8 @@ import com.xworkz.real_estate_property.dao.RealEstatePropertyDetilesDTO;
 import com.xworkz.real_estate_property.dto.RealEstateDao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RealEstateDAOImpl implements RealEstateDao {
     @Override
@@ -121,8 +123,8 @@ public class RealEstateDAOImpl implements RealEstateDao {
     }
 
     @Override
-    public RealEstatePropertyDetilesDTO saveRead(String propertyId) {
-
+    public List <RealEstatePropertyDetilesDTO> getDetailsList() {
+        List<RealEstatePropertyDetilesDTO>arrayList=new ArrayList();
         RealEstatePropertyDetilesDTO dto=null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -132,8 +134,8 @@ public class RealEstateDAOImpl implements RealEstateDao {
 
             try {
               connection=  DriverManager.getConnection("jdbc:mysql://localhost:3306/payment_db","root","Prateek@#1");
-            PreparedStatement preparedStatement=connection.prepareStatement("select * from property_info where property_id=?");
-                preparedStatement.setString(1,propertyId);
+            PreparedStatement preparedStatement=connection.prepareStatement("select * from property_info ");
+
                 ResultSet resultSet=preparedStatement.executeQuery();
 
                 while(resultSet.next()){
@@ -142,7 +144,8 @@ public class RealEstateDAOImpl implements RealEstateDao {
                     dto.setAddress(resultSet.getString("address"));
                     dto.setPrice(resultSet.getDouble("price"));
                     dto.setArea(resultSet.getDouble("area"));
-                    dto.setOwnerName(resultSet.getString("ownerName"));
+                    dto.setOwnerName(resultSet.getString("owner_name"));
+                    arrayList.add(dto);
                 }
 
             } catch (SQLException ex) {
@@ -150,6 +153,6 @@ public class RealEstateDAOImpl implements RealEstateDao {
             }
 
 
-        return dto;
+        return arrayList;
     }
 }

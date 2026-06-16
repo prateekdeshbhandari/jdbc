@@ -5,6 +5,8 @@ import com.xwork.taxi.dto.TaxiDetailsDTO;
 
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaxiDAOImpl implements TaxiDao {
 
@@ -118,9 +120,9 @@ public class TaxiDAOImpl implements TaxiDao {
             return isDelete;
         }
     @Override
-    public TaxiDetailsDTO selectByDriverName(String driverName) {
+    public List<TaxiDetailsDTO> taxiDetielsList(){
+        List<TaxiDetailsDTO> arrayList = new ArrayList();
 
-        TaxiDetailsDTO dto= null;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -129,7 +131,7 @@ public class TaxiDAOImpl implements TaxiDao {
         }
 
         String selectQuery =
-                "SELECT *  FROM taxidetails WHERE driver_name=?";
+                "SELECT *  FROM taxidetails ";
 
         Connection connection = null;
 
@@ -142,18 +144,20 @@ public class TaxiDAOImpl implements TaxiDao {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(selectQuery);
 
-            preparedStatement.setString(1, driverName);
+
+
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
 
 
-dto=new TaxiDetailsDTO();
+TaxiDetailsDTO dto=new TaxiDetailsDTO();
                dto.setDriverName( resultSet.getString("driver_name"));
               dto.setCarModel( resultSet.getString("car_model"));
                dto.setLicensePlate( resultSet.getString("lisence_plate"));
                dto.setFarePerKm( resultSet.getDouble("fare_per_km"));
+                arrayList.add(dto);
             }
 
 
@@ -169,7 +173,7 @@ dto=new TaxiDetailsDTO();
             }
         }
 
-        return dto;
+        return arrayList;
     }
 
 }
