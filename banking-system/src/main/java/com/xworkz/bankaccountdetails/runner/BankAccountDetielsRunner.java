@@ -4,6 +4,8 @@ package com.xworkz.bankaccountdetails.runner;
 import com.xworkz.bankaccountdetails.dao.AccvountDetlilesDAO;
 import com.xworkz.bankaccountdetails.dto.BankAccountDTO;
 import com.xworkz.bankaccountdetails.dto.impl.BankAccountDTOImpl;
+import com.xworkz.bankaccountdetails.servies.BankAccountValidet;
+import com.xworkz.bankaccountdetails.servies.impl.BankAccountImpl;
 
 public class BankAccountDetielsRunner {
     public static void main(String[] args) {
@@ -28,9 +30,11 @@ public class BankAccountDetielsRunner {
         dao1.setAccountType("debit");
         dao1.setBalance(1000);
         dao1.setBranchName("jp nagar");
-        boolean saved1=dto.save(dao1);
+        int saved1=dto.save(dao1);
         System.out.println("account detalies seved: "+saved1);
-
+        BankAccountValidet re=new BankAccountImpl();
+        re.validet(dao);
+        re.validet(dao1);
         BankAccountDTOImpl dtos=new BankAccountDTOImpl();
         boolean updated = dtos.saveUpdate(13, 40000, "credit");
 
@@ -38,6 +42,7 @@ public class BankAccountDetielsRunner {
 
         boolean delete=dtos.saveDelete(13);
         System.out.println("Delete : " + delete);
+
     }
 
 }
