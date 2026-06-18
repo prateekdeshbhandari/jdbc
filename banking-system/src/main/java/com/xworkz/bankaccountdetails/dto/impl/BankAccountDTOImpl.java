@@ -189,6 +189,39 @@ public class BankAccountDTOImpl implements BankAccountDTO {
         return attayListnew;
     }
 
+    @Override
+    public String insertMultialRow(List<AccvountDetlilesDAO> accvountDetlilesDAOS) {
+
+        System.out.println("multipal row invoking...");
+        String idInsert=null;
+Connection connection=null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+           connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/payment_db","root","Prateek@#1");
+            PreparedStatement preparedStatement=connection.prepareStatement("insert into account_info( account_number,account_holder_name, account_type,  balance, branch_name)VALUES(?,?,?,?,?)");
+        for (AccvountDetlilesDAO ref:accvountDetlilesDAOS){
+            preparedStatement.setInt(1,ref.getAccountNumber());
+            preparedStatement.setString(2,ref.getAccountHolderName());
+            preparedStatement.setString(3,ref.getAccountType());
+            preparedStatement.setDouble(3,ref.getBalance());
+            preparedStatement.setString(1,ref.getBranchName());
+            accvountDetlilesDAOS.add(ref);
+            System.out.println("inserting data"+ref.getAccountNumber());
+
+
+        }
+       int[] rf= preparedStatement.executeBatch();
+
+            System.out.println("insert"+rf);
+            
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return idInsert;
+    }
+
 }
 
 

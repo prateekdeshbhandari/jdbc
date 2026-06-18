@@ -9,4 +9,5 @@ public interface BankAccountDTO {
     public Boolean  saveUpdate(int accountNumber,double balance,String accountType);
     public Boolean saveDelete(int accountNumber);
     List <AccvountDetlilesDAO> accountListRead();
+    String insertMultialRow(List<AccvountDetlilesDAO > accvountDetlilesDAOS);
 }
