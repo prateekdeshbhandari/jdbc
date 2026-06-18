@@ -12,9 +12,9 @@ public class BankAccountDTOImpl implements BankAccountDTO {
 
 
     @Override
-    public int save(AccvountDetlilesDAO accvountDetlilesDAO) {
+    public boolean save(AccvountDetlilesDAO accvountDetlilesDAO) {
         System.out.println("propartis Invoking detiels: "+accvountDetlilesDAO);
-        int validection=0;
+        boolean validection=false;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -203,22 +203,23 @@ Connection connection=null;
             preparedStatement.setInt(1,ref.getAccountNumber());
             preparedStatement.setString(2,ref.getAccountHolderName());
             preparedStatement.setString(3,ref.getAccountType());
-            preparedStatement.setDouble(3,ref.getBalance());
-            preparedStatement.setString(1,ref.getBranchName());
-            accvountDetlilesDAOS.add(ref);
+            preparedStatement.setDouble(4,ref.getBalance());
+            preparedStatement.setString(5,ref.getBranchName());
+            preparedStatement.addBatch();
             System.out.println("inserting data"+ref.getAccountNumber());
 
 
         }
-       int[] rf= preparedStatement.executeBatch();
-
-            System.out.println("insert"+rf);
-            
+       int[] rf1= preparedStatement.executeBatch();
+          for (int b:rf1){
+                System.out.println("insert" +b);
+            }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        idInsert="jhsf" ;
         return idInsert;
     }
 

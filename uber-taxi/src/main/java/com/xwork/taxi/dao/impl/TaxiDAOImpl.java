@@ -176,6 +176,7 @@ rowInsert=true;
 
     @Override
     public String insertMultpalRow(List<TaxiDetailsDTO> detailsDTOS) {
+
         System.out.println("mult row inserting");
         String isInsert = null;
         Connection connection = null;
@@ -193,10 +194,14 @@ rowInsert=true;
                 preparedStatement.addBatch();
                 System.out.println(" insert " + ref.getDriverName());
             }
-           int[] ref= preparedStatement.executeBatch();
-//            for(int a=ref){
-//                System.out.println(a);
-//            }
+           int[] ref1= preparedStatement.executeBatch();
+
+            for(int a:ref1){
+
+                System.out.println("insertinh"+a);
+
+            }
+
             isInsert = "insert data";
 
         } catch (ClassNotFoundException e) {

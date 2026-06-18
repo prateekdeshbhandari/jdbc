@@ -1,13 +1,17 @@
 package com.xworkz.real_estate_property.severis.impl;
 
 import com.xworkz.real_estate_property.dao.RealEstatePropertyDetilesDTO;
+import com.xworkz.real_estate_property.dto.RealEstateDao;
 import com.xworkz.real_estate_property.severis.RealEstate;
 
 public class RealEstetPropartesServis implements RealEstate {
-
+RealEstateDao realEstateDao;
+public RealEstetPropartesServis(RealEstateDao realEstateDao){
+    this.realEstateDao=realEstateDao;
+}
     @Override
     public boolean validet(RealEstatePropertyDetilesDTO dto) {
-        boolean isValidation = false;
+
 
         boolean isPropertyIdValid = false;
         boolean isAddressValid = false;
@@ -56,11 +60,14 @@ public class RealEstetPropartesServis implements RealEstate {
                 isAreaValid &&
                 isOwnerNameValid) {
 
-            isValidation = true;
-            System.out.println("Data validated successfully...");
-        }
 
-        return isValidation;
+            System.out.println("Data validated successfully...");
+            return this.realEstateDao.save(dto);
+        }
+        System.out.println("invalid data");
+
+
+        return false;
     }
 }
 

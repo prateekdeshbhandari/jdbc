@@ -9,9 +9,9 @@ import java.util.List;
 
 public class RealEstateDAOImpl implements RealEstateDao {
     @Override
-    public int save(RealEstatePropertyDetilesDTO realEstatePropertyDetilesDTO) {
+    public boolean save(RealEstatePropertyDetilesDTO realEstatePropertyDetilesDTO) {
         System.out.println("property data Invoking..."+realEstatePropertyDetilesDTO);
-        int  rowselected=0;
+        boolean  rowselected=false;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver") ;
         } catch (ClassNotFoundException e) {
@@ -27,7 +27,7 @@ public class RealEstateDAOImpl implements RealEstateDao {
            preparedStatement.setDouble(3,realEstatePropertyDetilesDTO.getPrice());
            preparedStatement.setDouble(4,realEstatePropertyDetilesDTO.getArea());
            preparedStatement.setString(5, realEstatePropertyDetilesDTO.getAddress());
-           int insert=preparedStatement.executeUpdate();
+           boolean insert=preparedStatement.execute();
             System.out.println("insert data sucssefully..."+insert);
 
 
