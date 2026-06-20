@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Setter
 @Getter
-
+@ToString
 public class RealEstatePropertyDetilesDTO {
     private int propertyId;
     private String address;

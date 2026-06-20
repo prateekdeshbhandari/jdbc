@@ -38,13 +38,13 @@ realEstate.validet(dto1);
        boolean de=dao1.savedDelete(2);
         System.out.println("Delete: "+de);
 
-//        List <RealEstatePropertyDetilesDTO>reff=dao.getDetailsList();
-//
-//        System.out.println();
-//        for(RealEstatePropertyDetilesDTO refff:reff)
-//        {
-//            System.out.println(""+refff);
-//        }
+        List <RealEstatePropertyDetilesDTO>reff=dao.getDetailsList();
+
+        System.out.println();
+        for(RealEstatePropertyDetilesDTO refff:reff)
+        {
+            System.out.println(""+refff);
+        }
 
 
     }
