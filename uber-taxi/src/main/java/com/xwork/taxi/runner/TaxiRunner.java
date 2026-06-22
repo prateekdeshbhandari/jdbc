@@ -54,7 +54,7 @@ public class TaxiRunner {
 
 TaxiDetailsDTO dto=new TaxiDetailsDTO();
         TaxiDetielsDtoValidection taxiDetielsDtoValidection=new TaxiDetailesValidectionImpl();
-        dto.setDriverName("esd");
+        dto.setDriverName("prateek");
         dto.setCarModel("BMW");
         dto.setLicensePlate("KA-01-AB-1234");
         dto.setFarePerKm(-5);
