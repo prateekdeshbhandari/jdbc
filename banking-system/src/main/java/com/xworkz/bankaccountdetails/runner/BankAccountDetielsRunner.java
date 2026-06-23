@@ -15,7 +15,7 @@ public class BankAccountDetielsRunner {
         BankAccountDTO dto=new BankAccountDTOImpl();
         BankAccountValidet re=new BankAccountImpl(dto);
         AccvountDetlilesDAO dao=new AccvountDetlilesDAO();
-        dao.setAccountNumber(123);
+        dao.setAccountNumber(1);
         dao.setAccountHolderName(null);
         dao.setAccountType("debit");
         dao.setBalance(5000);
